@@ -2,8 +2,8 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.models.odpoved import Odpoved
-from app.config.database import collection_name, client, db
+from models.odpoved import Odpoved
+from config.database import collection_name, client, db
 from schema.schemas import list_serial
 from bson import ObjectId
 

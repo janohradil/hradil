@@ -4,13 +4,12 @@ import os
 
 client = MongoClient(f"mongodb+srv://{config("DB_USER")}:"
                      f"{config("DB_PASSWORD")}@{config("DB_HOST")}/"
-                     f"jan?retryWrites=true&w=majority"
-                     f"&appName={config("APP_NAME")}",
+                     f"jan?retryWrites=true&w=majority",
                      authMechanism='MONGODB-CR')
 
 db = client.hradil
  
-collection_name = db["odpovede"]
+collection_name = db.odpovede
 
 print(client)
 print(db)
