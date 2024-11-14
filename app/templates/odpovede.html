@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Odpovede z formulara</h2>
+{% for odpoved in odpovede %}
+<p>{{ odpoved.meno }} {{ odpoved.priezvisko }} {{ odpoved.telefon }} {{ odpoved.sprava }}</p>
+{% endfor %}
+
+
+{% endblock %}

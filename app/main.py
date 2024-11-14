@@ -4,9 +4,12 @@ from fastapi import FastAPI, File, Request, Depends, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from routes.route import router
 from datetime import datetime
 
 app = FastAPI()
+
+app.include_router(router)
 
 # Static and template directories
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -82,3 +85,9 @@ async def upload_image(file: UploadFile = File(...)):
     with open(file_location, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"info": "Image uploaded successfully"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+    
