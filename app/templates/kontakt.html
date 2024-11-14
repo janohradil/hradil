@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Formulár na kontakt</h2>
+<form class="form_inputs">
+    <div class="mb-3">
+        <label for="name" class="form-label">Meno</label>
+        <input type="text" class="form-control" placeholder="Jozef Mkrvička" id="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" placeholder="mkrvicka@gmail.com" id="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Správa</label>
+        <textarea class="form-control" id="message" rows="3" placeholder="Tu napíš svoju správu." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Odoslať</button>
+</form>
+
+
+
+{% endblock %}
