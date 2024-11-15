@@ -36,7 +36,8 @@
     <p>Prezrite si moje diela.
     </p>
     <div class="container mt-4">
-        <a href="/portfolio" class="btn btn-primary">Moja tvorba.</a>
+        <div hx-get="/portfolio_short" hx-target="#moja-tvorba" class="btn btn-primary">Moja tvorba.</div>
     </div>
+    <div id="moja-tvorba"></div>
 </div>
 {% endblock %}

@@ -1,15 +1,15 @@
 import os
 import shutil
-from fastapi import APIRouter, FastAPI, File, Request, Depends, UploadFile
+from fastapi import APIRouter, File, Form, Request, Depends, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from routes.route import router
+from config.database import client, db, collection_name
+from schema.schemas import list_serial
 from datetime import datetime
 
 router_prezentacia = APIRouter(tags=["prezentacia"])
-
-templates = Jinja2Templates(directory="templates")
 
 # Static and template directories
 router_prezentacia.mount("/static", StaticFiles(directory="static"), name="static")
@@ -40,6 +40,13 @@ async def portfolio_view(request: Request, current_year: dict = Depends(get_year
     """Return the portfolio page."""
     return templates.TemplateResponse("portfolio.html", {"request": request, **current_year})
 
+@router_prezentacia.get("/portfolio_short", response_class=HTMLResponse)
+async def portfolio_view(request: Request, current_year: dict = Depends(get_year)):
+    """Return the portfolio page."""
+    portfolio_data = list_serial(client.hradil.portfolio_data.find(), res_func='individual_serial_portfolio')
+    print(portfolio_data)
+    return templates.TemplateResponse("portfolio_short.html", {"request": request, "portfolio_data": portfolio_data, **current_year})
+
 @router_prezentacia.get("/portfolio/items", response_class=HTMLResponse)
 async def portfolio_items(request: Request, current_year: dict = Depends(get_year)):
     # Example portfolio data
@@ -64,6 +71,18 @@ async def portfolio_items(request: Request, current_year: dict = Depends(get_yea
 async def contact_view(request: Request, current_year: dict = Depends(get_year)):
     """Return the contact page."""
     return templates.TemplateResponse("kontakt.html", {"request": request, **current_year})
+
+@router_prezentacia.post("/kontakt")
+async def kontakt(fname: str = Form(...), lname: str = Form(...), phone: str = Form(...), email: str = Form(...), message: str = Form(...)):
+    db.odpovede.insert_one({"fname": fname, 
+                            "lname": lname, 
+                            "phone": phone, 
+                            "email": email, 
+                            "message": message, 
+                            "date": datetime.now()
+                            })
+    response_content = f"<p>Thank you, {fname} {lname}! Your message has been received.</p>"
+    return HTMLResponse(content=response_content)
 
 
 @router_prezentacia.get("/galeria", response_class=HTMLResponse)

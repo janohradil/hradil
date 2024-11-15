@@ -1,14 +1,20 @@
 
-def individual_serial(odpoved) -> dict:
+def individual_serial_odpoved(res) -> dict:
     return {
-        "id": str(odpoved.get("_id")),
-        "meno": odpoved.get("meno"),
-        "priezvisko": odpoved.get("priezvisko"),
-        "telefon": odpoved.get("telefon"),
-        "sprava": odpoved.get("sprava")
+        "id": str(res.get("_id")),
+        "fname": res.get("fname"),
+        "lname": res.get("lname"),
+        "phone": res.get("phone"),
+        "message": res.get("message")
+    }
+
+def individual_serial_portfolio(res) -> dict:
+    return {
+        "id": str(res.get("_id")),
+        "title": res.get("title")
     }
 
 
-def list_serial(odpoved) -> list:
-    return [individual_serial(odpoved) for odpoved in odpoved]
+def list_serial(res, res_func='individual_serial_odpoved') -> list:
+    return [eval(res_func)(r) for r in res]
 

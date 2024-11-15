@@ -1,7 +1,7 @@
 /* styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #d7c291;
+    background-color: #a5c3f0;
     background-image: url('/static/img/tools.png');
     background-repeat: repeat;
 }
@@ -29,10 +29,10 @@ h1 {
     margin-bottom: 1rem;
     width: 100%;
     box-sizing: border-box;
-    background-color: #ededd1;
+    background-color: #d0ddf1;
 }
 
-.card {background-color: #ededd1;}
+.card {background-color: #cedef7;}
 
 .card-title {
     font-weight: bold;
@@ -103,4 +103,10 @@ footer p {
 .extend-footer {
     flex-grow: 1;
     height: 1vh;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }

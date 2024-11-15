@@ -1,4 +1,3 @@
-from datetime import date
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -10,10 +9,12 @@ from bson import ObjectId
 
 
 router = APIRouter(tags=["odpovede"])
+
 templates = Jinja2Templates(directory="templates")
 
+
 @router.get("/odpovede", response_class=HTMLResponse)
-async def ziskaj_odpovede(request: Request) -> HTMLResponse:
+async def ziskaj_odpovede() -> HTMLResponse:
     """
     Get all responses from the database.
     
@@ -22,21 +23,20 @@ async def ziskaj_odpovede(request: Request) -> HTMLResponse:
     """
     try:
         odpovede = list_serial(collection_name.find())
-        # print(odpovede)
     except Exception as e:
-        print("error", e)
-    else:
-        return templates.TemplateResponse("odpovede.html", {"request": request, "odpovede": odpovede})
+        print("error", str(e))
+    else: 
+        print(odpovede)
+        return templates.TemplateResponse("odpovede.html", {"odpovede": odpovede})
 
 
 @router.post("/odpovede")
 async def posli_odpoved(request: Request):
     data = await request.form()
-    fname = data.get("fname")
-    lname = data.get("lname")
-    email = data.get("email")
-    phone = data.get("phone")
-    message = data.get("message")
-    odpoved = Odpoved(fname=fname, lname=lname, phone=phone, email=email, message=message, date=date.today())
-    odpoved_id = collection_name.insert_one(odpoved.model_dump())
+    meno = data.get("meno")
+    priezvisko = data.get("priezvisko")
+    telefon = data.get("telefon")
+    sprava = data.get("sprava")
+    odpoved = Odpoved(meno=meno, priezvisko=priezvisko, telefon=telefon, sprava=sprava)
+    odpoved_id = collection_name.insert_one(odpoved.dict())
     return {"id": str(odpoved_id.inserted_id)}
