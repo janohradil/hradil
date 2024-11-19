@@ -5,6 +5,8 @@ def individual_serial_odpoved(res) -> dict:
         "fname": res.get("fname"),
         "lname": res.get("lname"),
         "phone": res.get("phone"),
+        "email": res.get("email"),
+        "date": res.get("date"),
         "message": res.get("message")
     }
 

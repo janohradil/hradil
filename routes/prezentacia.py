@@ -44,7 +44,7 @@ async def portfolio_view(request: Request, current_year: dict = Depends(get_year
 async def portfolio_view(request: Request, current_year: dict = Depends(get_year)):
     """Return the portfolio page."""
     portfolio_data = list_serial(client.hradil.portfolio_data.find(), res_func='individual_serial_portfolio')
-    print(portfolio_data)
+    # print(portfolio_data)
     return templates.TemplateResponse("portfolio_short.html", {"request": request, "portfolio_data": portfolio_data, **current_year})
 
 @router_prezentacia.get("/portfolio/items", response_class=HTMLResponse)
@@ -81,9 +81,15 @@ async def kontakt(fname: str = Form(...), lname: str = Form(...), phone: str = F
                             "message": message, 
                             "date": datetime.now()
                             })
-    response_content = f"<p>Thank you, {fname} {lname}! Your message has been received.</p>"
+    response_content = f"<p>Ďakujem veľmi pekne {fname} {lname} za zanechanie správy! Vaša správa \"{message}\" bola zaznamenaná.</p><p>telefónne číso: {phone}</p><p>email: {email}</p>"
     return HTMLResponse(content=response_content)
 
+@router_prezentacia.get("/spravy", response_class=HTMLResponse)
+async def zobraz_spravy(request: Request, current_year: dict = Depends(get_year)):
+    """Zobraz všetky správy."""
+    odpovede = db.odpovede.find()
+    print(odpovede)
+    return templates.TemplateResponse("odpovede.html", {"request": request, "odpovede": list_serial(odpovede), **current_year})
 
 @router_prezentacia.get("/galeria", response_class=HTMLResponse)
 async def galeria(request: Request):
