@@ -35,20 +35,45 @@
 
     <p>Prezrite si moje diela.
     </p>
-    <div class="container mt-4">
-        <div hx-get="/portfolio_short" hx-target="#moja-tvorba" class="btn btn-primary">Moja tvorba.</div>
-    </div>
-    <div class="mb-4" id="moja-tvorba"></div>
 
-    <div x-data="{ open: false, fetchProjekty }">
-        <button class="btn btn-primary" @click="open = !open"
-            x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <div class="col" x-data="{ open: false, fetchProjekty }">
+                <button class="btn btn-primary" @click="open = !open"
+                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
 
-        <div x-show="open" @click.outside="open = false">
-            <div x-data="fetchProjekty()">
-                <div x-html="projekty"></div>
+                <div x-show="open">
+                    <div x-data="fetchProjekty()">
+                        <div x-html="projekty"></div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-lg-4 col-sm-12">
+            <div class="col" x-data="{ open: false, fetchProjekty }">
+                <button class="btn btn-primary" @click="open = !open"
+                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+
+                <div x-show="open">
+                    <div x-data="fetchProjekty()">
+                        <div x-html="projekty"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <div class="col" x-data="{ open: false, fetchProjekty }">
+                <button class="btn btn-primary" @click="open = !open"
+                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+
+                <div x-show="open">
+                    <div x-data="fetchProjekty()">
+                        <div x-html="projekty"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <script>
