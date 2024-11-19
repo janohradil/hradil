@@ -9,25 +9,34 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel=" icon" type="image/x-icon" href="/static/img/favicon.ico">
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js" defer></script>
-    <!-- <script src="https://unpkg.com/petite-vue" defer init></script> -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
     {% block head %}{% endblock %}
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" x-data="{ open: false }">
         <div class="container">
-            <a class="navbar-brand" href="/">Ján Hradil - programovanie, dátová analytika</a>
             <div class="row">
-                <div class="col-md-6 text-md-end">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="/">Domov</a>
-                        <a class="nav-link" href="/portfolio">Portfólio</a>
-                        <a class="nav-link" href="/galeria">Galéria</a>
-                        <a class="nav-link" href="/kontakt">Kontakt</a>
+                <div class="col">
+                    <a class="navbar-brand" href="/">Ján Hradil - programovanie, dátová analytika</a>
+                </div>
+                <div class="col-md-auto">
+                    <div class="collapse navbar-collapse" x-show="open">
+                        <div class="navbar-nav">
+                            <a class="nav-link" href="/">Domov</a>
+                            <a class="nav-link" href="/portfolio">Portfólio</a>
+                            <a class="nav-link" href="/galeria">Galéria</a>
+                            <a class="nav-link" href="/kontakt">Kontakt</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <button class="navbar-toggler" type="button" @click="open = !open" aria-controls="navbarNav"
+                aria-expanded="open" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
         </div>
     </nav>
     <div class="container main-block mt-4">
