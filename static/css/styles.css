@@ -105,6 +105,10 @@ footer p {
     height: 1vh;
 }
 
+main {
+    background-color: rgba(165, 195, 240, 0.7);
+}
+
 ul {
     list-style-type: none;
     margin: 0;

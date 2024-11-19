@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center">
+<main class="text-center">
     <h1>Vitajte na stránke Ing. Jána Hradila.</h1>
     <h2>Kto som a čím sa zaoberám</h2>
     <h3>Začiatky programovania</h3>
@@ -38,6 +38,30 @@
     <div class="container mt-4">
         <div hx-get="/portfolio_short" hx-target="#moja-tvorba" class="btn btn-primary">Moja tvorba.</div>
     </div>
-    <div id="moja-tvorba"></div>
-</div>
+    <div class="mb-4" id="moja-tvorba"></div>
+
+    <div x-data="{ open: false, fetchProjekty }">
+        <button class="btn btn-primary" @click="open = !open"
+            x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+
+        <div x-show="open" @click.outside="open = false">
+            <div x-data="fetchProjekty()">
+                <div x-html="projekty"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchProjekty() {
+            try {
+                const response = await fetch('/portfolio_short');
+                this.projekty = await response.text();
+                console.log(this.projekty);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+
+</main>
 {% endblock %}
