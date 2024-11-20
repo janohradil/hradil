@@ -2,91 +2,73 @@
 
 {% block content %}
 <main class="text-center">
-    <h1>Vitajte na stránke Ing. Jána Hradila.</h1>
-    <h2>Kto som a čím sa zaoberám</h2>
-    <h3>Začiatky programovania</h3>
-    <p>Vyštudoval som na technickej univerzite v Košicach odbor hutníctvo.
-        V odbore som síce pracoval niekoľko rokov, ale rozhodol som sa
-        rekvalifikovať na oblasť IT. Začal som pracovať na projektoch ako úprava
-        fotiek a tvorba plagátov. Keďže som používal Linux už od ukončenia
-        vysokej školy, čoraz viac som začal využívať príkazový riadok a s tým
-        spojené bashové skripty. Postupom času som sa dostal k programovacím jazykom
-        Python a Perl, ktoré ma zaujali natoľko, že som si skúšal nové projekty
-        vypracovávať v týchto jazykoch.
-    </p>
-    <h3>Výzvy</h3>
-    <p>Pracoval som vo viacerých zamestnaniach, kde sa raz vyžadovali programátorské
-        zručnosti, inde zas bol dôraz na dátové analýzy. Dátové analýzy ma zaujali natoľko,
-        že som posledné obdobie venoval pozornosť a energiu práve na túto oblasť.
-        V portfóliu možete nájsť môj kód ohľadom vyhodnotenia šachových turnajov či
-        spôsob, ako každý rok získavať podklady na aktualizáciu zjednodušeného
-        rozpisu cestovného poriadku pre našu obec alebo susedné obce. Pred rokom 2022
-        ešte neboli možnosti využívania umelej inteligencie pri projektoch, ako
-        väčšina, som sa v prípade problémov obracal na google a stackoverflow.
-    </p>
-    <h3>Súčasnosť</h3>
-    <p>Vzhľadom na všadeprítomné webové aplikácie som nemohol stáť bokom, rozhodol som sa
-        chopiť sa príležitosti a využiť svoje skúsenosti s tvorbou webu aj pre svojich
-        kamarátov či známich. Technológie a nástroje, ktoré používam sú väčšinou Drupal,
-        FastAPI a Django. Ako databázové systémy využívam z relačných MySQL, PostgreSQL
-        a SQLite3, z nerelačných MongoDB. Dnes je už pomerne jednoduché nezasektnúť sa
-        vďaka integrácii nástrojov AI, ktoré podstatne zjednodušujú proces vývoja.
-    </p>
-
-    <p>Prezrite si moje diela.
-    </p>
-
     <div class="row">
-        <div class="col-lg-4 col-sm-12">
-            <div class="col" x-data="{ open: false, fetchProjekty }">
-                <button class="btn btn-primary" @click="open = !open"
-                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+        <div class="col-xl-9 col-lg-8 col-md-7 col-sm-6">
+            <h1>Vitajte na stránke Ing. Jána Hradila.</h1>
+            <h2>Kto som a čím sa zaoberám</h2>
+            <h3>Začiatky programovania</h3>
+            <p>Vyštudoval som na technickej univerzite v Košicach odbor hutníctvo.
+                V odbore som síce pracoval niekoľko rokov, ale rozhodol som sa
+                rekvalifikovať na oblasť IT. Začal som pracovať na projektoch ako úprava
+                fotiek a tvorba plagátov. Keďže som používal Linux už od ukončenia
+                vysokej školy, čoraz viac som začal využívať príkazový riadok a s tým
+                spojené bashové skripty. Postupom času som sa dostal k programovacím jazykom
+                Python a Perl, ktoré ma zaujali natoľko, že som si skúšal nové projekty
+                vypracovávať v týchto jazykoch.
+            </p>
+            <h3>Výzvy</h3>
+            <p>Pracoval som vo viacerých zamestnaniach, kde sa raz vyžadovali programátorské
+                zručnosti, inde zas bol dôraz na dátové analýzy. Dátové analýzy ma zaujali natoľko,
+                že som posledné obdobie venoval pozornosť a energiu práve na túto oblasť.
+                V portfóliu možete nájsť môj kód ohľadom vyhodnotenia šachových turnajov či
+                spôsob, ako každý rok získavať podklady na aktualizáciu zjednodušeného
+                rozpisu cestovného poriadku pre našu obec alebo susedné obce. Pred rokom 2022
+                ešte neboli možnosti využívania umelej inteligencie pri projektoch, ako
+                väčšina, som sa v prípade problémov obracal na google a stackoverflow.
+            </p>
+            <h3>Súčasnosť</h3>
+            <p>Vzhľadom na všadeprítomné webové aplikácie som nemohol stáť bokom, rozhodol som sa
+                chopiť sa príležitosti a využiť svoje skúsenosti s tvorbou webu aj pre svojich
+                kamarátov či známich. Technológie a nástroje, ktoré používam sú väčšinou Drupal,
+                FastAPI a Django. Ako databázové systémy využívam z relačných MySQL, PostgreSQL
+                a SQLite3, z nerelačných MongoDB. Dnes je už pomerne jednoduché nezasektnúť sa
+                vďaka integrácii nástrojov AI, ktoré podstatne zjednodušujú proces vývoja.
+            </p>
 
-                <div x-show="open">
-                    <div x-data="fetchProjekty()">
-                        <div x-html="projekty"></div>
+        </div>
+
+        <aside class="col">
+            <div>
+                <p>Prezrite si moje diela.</p>
+                <div x-data="{ open: false, fetchProjekty }">
+                    <button class="btn btn-primary m-4" @click="open = !open"
+                        x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
+
+                    <div x-show="open">
+                        <div x-data="fetchProjekty()">
+                            <div x-html="projekty"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-sm-12">
-            <div class="col" x-data="{ open: false, fetchProjekty }">
-                <button class="btn btn-primary" @click="open = !open"
-                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
-
-                <div x-show="open">
-                    <div x-data="fetchProjekty()">
-                        <div x-html="projekty"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-12">
-            <div class="col" x-data="{ open: false, fetchProjekty }">
-                <button class="btn btn-primary" @click="open = !open"
-                    x-text="open ? 'Skry projekty' : 'Zobraz projekty'"></button>
-
-                <div x-show="open">
-                    <div x-data="fetchProjekty()">
-                        <div x-html="projekty"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <p>fsalfasl;f;a</p>
+        </aside>
     </div>
-    </div>
 
-    <script>
-        async function fetchProjekty() {
-            try {
-                const response = await fetch('/portfolio_short');
-                this.projekty = await response.text();
-                console.log(this.projekty);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-    </script>
+
 
 </main>
+
+<script>
+    async function fetchProjekty() {
+        try {
+            const response = await fetch('/portfolio_short');
+            this.projekty = await response.text();
+            console.log(this.projekty);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>
+
 {% endblock %}
