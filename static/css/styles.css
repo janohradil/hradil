@@ -12,6 +12,22 @@ body {
     z-index: 100;
 }
 
+/* .navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    content: "";
+    background: no-repeat center center;
+    background-size: 100% 100%;
+}
+.navbar-toggler-icon.open {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.5%29" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"%3E%3C/path%3E%3C/svg%3E');
+}
+.navbar-toggler-icon.close {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.5%29" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"%3E%3C/path%3E%3C/svg%3E');
+} */
+
 .navbar-brand {
     font-weight: bold;
     font-size: 1.5rem;
@@ -21,6 +37,22 @@ h1 {
     color: #2c3e50;
 }
 
+h2 {
+    color: #354f69;
+}
+
+h3 {
+    color: #325272;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1.2rem;
+}
+
+p {
+    text-align: justify;
+}
+ 
 .form_inputs input,
 .form_inputs textarea {
     border: 1px solid #ccc;
@@ -106,11 +138,30 @@ footer p {
 }
 
 main {
-    background-color: rgba(165, 195, 240, 0.7);
+    background-color: rgba(165, 195, 240, 0.3);
 }
 
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+.transform {
+    transition: transform 0.3s;
+}
+.rotate-180 {
+    transform: rotate(180deg) scale(0.3);
+}
+
+.transition-enter-active {
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.transition-enter-start {
+    opacity: 0;
+    transform: translateY(-5px) scale(.7);
+}
+.transition-enter-end {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
