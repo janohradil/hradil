@@ -24,7 +24,7 @@ def get_year():
     current_year = datetime.now().year
     return {"year": current_year}
 
-def get_image_paths(exclude_substr: list[str]=['orig', '.png', '.ico']):
+def get_image_paths(exclude_substr: list[str]=['orig', 'diela', 'tools.png', '.ico']):
     # List image file paths
     images = os.listdir(IMAGE_DIR)
     cond = lambda img: not any(substr in img for substr in exclude_substr)
