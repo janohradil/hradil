@@ -6,12 +6,12 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Foto galéria</h2>
+    <h2 class="text-center mb-4">Fotogaléria</h2>
     <div class="row">
         <!-- Gallery Thumbnails -->
         {% for image in images %}
         <div class="col-md-3 mb-4 gallery">
-            <a href="#carouselLightbox" data-bs-slide-to="{{ loop.index0 }}" data-bs-toggle="modal">
+            <a href="{{ image }}">
                 <img src="{{ image }}" class="img-thumbnail" alt="Image {{ loop.index }}">
             </a>
         </div>
@@ -19,48 +19,26 @@
     </div>
 </div>
 
-<!-- Lightbox Carousel -->
-<div class="modal fade" id="carouselLightbox" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div id="lightboxCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for image in images %}
-                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ image }}" class="d-block w-100" alt="Image {{ loop.index }}">
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Carousel controls -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        {% for i in range(images|length) %}
+        <li data-target="#carouselIndicators" data-slide-to="{{ i }}" class="{% if loop.first %}active{% endif %}"></li>
+        {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+        {% for image in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img src="{{ image }}" class="d-block w-100" alt="Image {{ image }}">
         </div>
+        {% endfor %}
     </div>
-</div>
-
-<div class="container mt-4">
-    <h2 class="text-center">Nahratie vlastných súborov do fotogalérie</h2>
-
-    <!-- File upload form -->
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <input class="form-control" type="file" name="file" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Nahraj obrázok / fotku</button>
-    </form>
-
-    <!-- Gallery Section -->
-    <div id="gallery-items" class="row row-cols-1 row-cols-md-3 g-4 mt-4">
-        <!-- Gallery items will load here -->
-    </div>
+    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Predchádzajúci</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Ďalší</span>
+    </a>
 </div>
 {% endblock %}

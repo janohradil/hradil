@@ -141,6 +141,14 @@ footer p {
     background-color: rgba(186, 210, 247, 0.2)
 }
 
+#carouselIndicators li {
+    display: none;
+}
+
+#carouselIndicators a:hover {
+    background-color: rgba(32, 39, 51, 0.4);
+}
+
 main {
     background-color: rgba(165, 195, 240, 0.3);
 }
