@@ -25,34 +25,18 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"
-        x-data="{ open: false, dropdownOpen: false, windowWidth: window.innerWidth }"
-        x-init="window.addEventListener('resize', () => windowWidth = window.innerWidth)">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand text-truncate" href="/">Ján Hradil - programovanie, dátová analytika</a>
-            <div x-show="!dropdownOpen" class="row">
-                <div class="col-md-auto">
-                    <div class="collapse navbar-collapse" x-show="open">
-                        <ul class="navbar-nav">
-                            <li><a class="nav-link" href="/">Domov</a></li>
-                            <li><a class="nav-link" href="/portfolio">Portfólio</a></li>
-                            <li><a class="nav-link" href="/galeria">Galéria</a></li>
-                            <li><a class="nav-link" href="/kontakt">Kontakt</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <div class="row">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div x-show="windowWidth < 992" class="relative">
-                <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false"
-                    class="row cursor-pointer select-none">
-                    <img x-bind:class="dropdownOpen ? 'transform rotate-180' : ''" class="d-none d-sm-block"
-                        src="https://img.icons8.com/small/32/777777/expand-arrow.png" alt="Expand Arrow">
-                </a>
-                <div x-show="dropdownOpen" x-cloak x-transition:enter="transition-enter-active"
-                    x-transition:enter-start="transition-enter-start" x-transition:enter-end="transition-enter-end">
-
-                    <ul class="navbar-nav">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
                         <li><a class="nav-link" href="/">Domov</a></li>
                         <li><a class="nav-link" href="/portfolio">Portfólio</a></li>
                         <li><a class="nav-link" href="/galeria">Galéria</a></li>
@@ -61,9 +45,7 @@
 
                 </div>
             </div>
-
         </div>
-
     </nav>
     <div class="container main-block mt-4">
         {% block content %}{% endblock %}
