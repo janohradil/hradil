@@ -1,9 +1,7 @@
+.gitignore
 **/*__pycache__/
 .venv
-.gitignore
-**/static/img/*
 favicon.ico
-*/static/work/
 .secrets
 .env
 */work/bkp/
