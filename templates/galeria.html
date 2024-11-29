@@ -6,15 +6,17 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Fotogaléria</h2>
+    <h1 class="text-center mb-4">Fotogaléria</h1>
     <div class="row">
         <!-- Gallery Thumbnails -->
         {% for image in images %}
+        {% if '_small' in image %}
         <div class="col-md-3 mb-4 gallery">
-            <a href="{{ image }}">
+            <a href="{{ image | replace('_small', '') }}">
                 <img src="{{ image }}" class="img-thumbnail" alt="Image {{ loop.index }}">
             </a>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
@@ -28,7 +30,7 @@
     <div class="carousel-inner">
         {% for image in images %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
-            <img src="{{ image }}" class="d-block w-100" alt="Image {{ image }}">
+            <img src="{{ image | replace('_small', '') }}" class="d-block w-100" alt="Image {{ image }}">
         </div>
         {% endfor %}
     </div>

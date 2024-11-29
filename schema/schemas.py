@@ -13,7 +13,10 @@ def individual_serial_odpoved(res) -> dict:
 def individual_serial_portfolio(res) -> dict:
     return {
         "id": str(res.get("_id")),
-        "title": res.get("title")
+        "title": res.get("title"),
+        "slug": res.get("slug"),
+        "text": res.get("text", ""),
+        "imgs": res.get("imgs", []),
     }
 
 

@@ -47,20 +47,20 @@
             </div>
         </div>
     </nav>
-    <div class="container main-block mt-4">
+    <main class="container main-block mt-4">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <!-- Footer Section -->
     <footer class="bg-dark text-white mt-5 py-4">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row justify-content-between">
+                <div class="col-auto" id="kontaktne-info">
                     <h5>Kontaktné informácie</h5>
                     <p>Email: jhradil@gmail.com</p>
                     <p>Telefónne číslo: +421 940 841 107</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-auto text-end" id="copyright">
                     <p>&copy; {{ year }} Ján Hradil. Všetky práva vyhradené.</p>
                 </div>
             </div>

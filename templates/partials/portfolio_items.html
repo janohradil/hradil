@@ -1,17 +1,23 @@
 {% for item in portfolio_data %}
 <div class="card mb-3">
     <div class="card-body">
-        <div class="container">
+        <div class="container" id="{{item.slug_id}}">
             <div class="row">
                 <div class="col-4">
                     <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.description }}</p>
-                    <a href="{{ item.img }}" class="btn btn-warning">Zobraz prílušný obrázok</a>
+                    <p class="card-text">{{ item.text }}</p>
+                    <p class="card-text">{{ item.slug }}</p>
+                    <button type="button" class="btn btn-primary" hx-get="{{ item.slug }}" hx-trigger="click"
+                        hx-target="#{{item.slug_id}}" hx-swap="innerHTML">Zobraz prílušný projekt
+                    </button>
                 </div>
                 <div class="col">
 
                     <div class="card">
-                        <img src="{{ item.img }}" class="card-img-top" alt="Gallery Image">
+                        {% for img in item.imgs %}
+                        <img src="{{ url_for ('static', path='img/diela/' ~ img) }}" class="card-img-top"
+                            alt="Ilustračný obrázok">
+                        {% endfor %}
                     </div>
                 </div>
             </div>

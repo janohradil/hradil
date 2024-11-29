@@ -1,0 +1,8 @@
+<h1>{{ data.title }}</h1>
+<p>{{ data.text }}</p>
+{% for img in data.imgs %}
+<img src="{{ url_for ('static', path='img/diela/' ~ img) }}" class="card-img-top" alt="Ilustračný obrázok">
+{% endfor %}
+<button type="button" class="btn btn-primary" hx-get="portfolio/items" hx-trigger="click" hx-target="#portfolio-items"
+    hx-swap="innerHTML">Späť
+</button>

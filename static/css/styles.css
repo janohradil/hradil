@@ -76,9 +76,15 @@ p {
     margin-bottom: 1rem;
 }
 
+.card img {
+    object-fit: cover;
+    margin-top: 2rem;
+}
+
 .card-img-top {
     object-fit: cover;
-    height: 200px;
+    width: inherit;
+    max-width: 810px;
 }
 
 .card-text {

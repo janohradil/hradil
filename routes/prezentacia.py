@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from routes.route import router
 from config.database import client, db, collection_name
-from schema.schemas import list_serial
+from schema.schemas import list_serial, individual_serial_odpoved, individual_serial_portfolio
 from datetime import datetime
 
 router_prezentacia = APIRouter(tags=["prezentacia"])
@@ -31,6 +31,25 @@ def get_image_paths(exclude_substr: list[str]=['orig', 'diela', 'tools.png', '.i
     image_paths = [f"/static/img/{img}" for img in images if cond(img)]
     return image_paths
 
+
+def slugify(value, allow_unicode=False):
+    """
+    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
+    dashes to single dashes. Remove characters that aren't alphanumerics,
+    underscores, or hyphens. Convert to lowercase. Also strip leading and
+    trailing whitespace, dashes, and underscores.
+    """
+    import re
+    import unicodedata
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize('NFKC', value)
+    else:
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value.lower())
+    return re.sub(r'[-\s]+', '-', value).strip('-_')
+
+
 @router_prezentacia.get("/", response_class=HTMLResponse)
 async def home(request: Request, current_year: dict = Depends(get_year)):
     return templates.TemplateResponse("home.html", {"request": request, **current_year})
@@ -43,13 +62,12 @@ async def portfolio_view(request: Request, current_year: dict = Depends(get_year
 @router_prezentacia.get("/portfolio_short", response_class=HTMLResponse)
 async def portfolio_view(request: Request, current_year: dict = Depends(get_year)):
     """Return the portfolio page."""
-    portfolio_data = list_serial(client.hradil.portfolio_data.find(), res_func='individual_serial_portfolio')
+    portfolio_data = list_serial(db.portfolio_data.find(), res_func='individual_serial_portfolio')
     # print(portfolio_data)
     return templates.TemplateResponse("portfolio_short.html", {"request": request, "portfolio_data": portfolio_data, **current_year})
 
 @router_prezentacia.get("/portfolio/items", response_class=HTMLResponse)
 async def portfolio_items(request: Request, current_year: dict = Depends(get_year)):
-    # Example portfolio data
     """
     Return the portfolio items page.
 
@@ -58,14 +76,29 @@ async def portfolio_items(request: Request, current_year: dict = Depends(get_yea
     The data is currently hard-coded for demonstration purposes. In the future, it
     should be replaced with a database query.
     """
-    portfolio_data = [
-        {"title": "Drevený stôl", "description": "Ručne zhotovený drevený jedálenský stôl.", "img": "/static/img/table.jpg"},
-        {"title": "Kuchynské skrine", "description": "Na mieru zhotovené kuchynské skrine.", "img": "/static/img/kuch_skrine.jpg"},
-        {"title": "Oltár", "description": "Oltárny stôl na liturgické účely.", "img": "/static/img/oltar.jpg"},
-        {"title": "Oltár", "description": "Anbóna na liturgické účely.", "img": "/static/img/anbona.jpg"}
-    ]
-    return templates.TemplateResponse("partials/portfolio_items.html", {"request": request, "portfolio_data": portfolio_data, **current_year})
+    def remove_before_slash(value):
+        if '/' in value:
+            return value.split('/', 1)[1]
+        return value
 
+    data = list_serial(db.portfolio_data.find(), res_func='individual_serial_portfolio')
+    # PATH = 'templates/projekty'
+    # portfolio_data = [{'title': f, 'path': os.path.join(PATH, f)} for f in os.listdir('templates/projekty')]
+    for projekt in data:
+        projekt['slug'] = os.path.join('projekty', slugify(projekt['title']))
+        print(projekt)
+        print(f"updating DB db.hradil.portfolio_data with slug: {projekt['slug']}")   
+        db.portfolio_data.update_one({'title': projekt['title']}, {'$set': {'slug': projekt['slug']}})
+        projekt['slug_id'] = remove_before_slash(projekt['slug'])
+    return templates.TemplateResponse("partials/portfolio_items.html", {"request": request, "portfolio_data": data, **current_year})
+
+
+@router_prezentacia.get("/projekty/{slug}", response_class=HTMLResponse)
+async def projekt(request: Request, slug: str, current_year: dict = Depends(get_year)):
+    print('slug', slug)
+    data = individual_serial_portfolio(db.portfolio_data.find_one({'slug': f'projekty/{slug}'}))
+    print(data)
+    return templates.TemplateResponse("projekt.html", {"request": request, "data": data, **current_year})
 
 @router_prezentacia.get("/kontakt", response_class=HTMLResponse)
 async def contact_view(request: Request, current_year: dict = Depends(get_year)):
