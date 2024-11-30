@@ -52,6 +52,10 @@ h1, h2, h3, h4, h5, h6 {
 p {
     text-align: justify;
 }
+
+.text-indent {
+    text-indent: 2em; /* Adjust the value as needed */
+}
  
 .form_inputs input,
 .form_inputs textarea {
@@ -84,12 +88,17 @@ p {
 .card-img-top {
     object-fit: cover;
     width: inherit;
-    max-width: 810px;
+    /* max-width: 360px; */
+}
+
+.portfolio img {
+    width: 100%;
+    max-width: 1240px;
 }
 
 .card-text {
     font-size: 1rem;
-    color: #7f8c8d;
+    color: #374141;
 }
 
 .container footer {

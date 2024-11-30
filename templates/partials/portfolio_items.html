@@ -3,15 +3,20 @@
     <div class="card-body">
         <div class="container" id="{{item.slug_id}}">
             <div class="row">
-                <div class="col-4">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.text }}</p>
-                    <p class="card-text">{{ item.slug }}</p>
-                    <button type="button" class="btn btn-primary" hx-get="{{ item.slug }}" hx-trigger="click"
-                        hx-target="#{{item.slug_id}}" hx-swap="innerHTML">Zobraz prílušný projekt
-                    </button>
+                <div class="col-12 col-md-6">
+                    <h5 class="card-title text-center">{{ item.title }}</h5>
+                    <div class="card-text">
+                        {% for paragraph in item.text %}
+                        <p class="text-indent">{{ paragraph }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary col-4 col-md-7 col-sm-8" hx-get="{{ item.slug }}"
+                            hx-trigger="click" hx-target="#{{item.slug_id}}" hx-swap="innerHTML">Zobraz prílušný projekt
+                        </button>
+                    </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
 
                     <div class="card">
                         {% for img in item.imgs %}

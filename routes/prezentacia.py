@@ -86,7 +86,8 @@ async def portfolio_items(request: Request, current_year: dict = Depends(get_yea
     # portfolio_data = [{'title': f, 'path': os.path.join(PATH, f)} for f in os.listdir('templates/projekty')]
     for projekt in data:
         projekt['slug'] = os.path.join('projekty', slugify(projekt['title']))
-        print(projekt)
+        projekt['text'] = [p for p in projekt['text'].splitlines() if p != '']
+        # print(projekt)
         print(f"updating DB db.hradil.portfolio_data with slug: {projekt['slug']}")   
         db.portfolio_data.update_one({'title': projekt['title']}, {'$set': {'slug': projekt['slug']}})
         projekt['slug_id'] = remove_before_slash(projekt['slug'])
@@ -95,10 +96,11 @@ async def portfolio_items(request: Request, current_year: dict = Depends(get_yea
 
 @router_prezentacia.get("/projekty/{slug}", response_class=HTMLResponse)
 async def projekt(request: Request, slug: str, current_year: dict = Depends(get_year)):
-    print('slug', slug)
-    data = individual_serial_portfolio(db.portfolio_data.find_one({'slug': f'projekty/{slug}'}))
-    print(data)
-    return templates.TemplateResponse("projekt.html", {"request": request, "data": data, **current_year})
+    # print('slug', slug)
+    projekt = individual_serial_portfolio(db.portfolio_data.find_one({'slug': f'projekty/{slug}'}))
+    projekt['text'] = [p for p in projekt['text'].splitlines() if p != '']
+    print(projekt)
+    return templates.TemplateResponse("projekt.html", {"request": request, "data": projekt, **current_year})
 
 @router_prezentacia.get("/kontakt", response_class=HTMLResponse)
 async def contact_view(request: Request, current_year: dict = Depends(get_year)):
