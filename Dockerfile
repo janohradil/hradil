@@ -3,10 +3,11 @@ FROM python:3.12.7 AS builder
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 WORKDIR /
-
+RUN ls -lh
 
 RUN python -m venv .venv
 COPY requirements.txt ./
+RUN ls -lh
 RUN .venv/bin/pip install -r requirements.txt
 FROM python:3.12.7-slim
 WORKDIR /

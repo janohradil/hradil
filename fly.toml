@@ -1,12 +1,13 @@
-# fly.toml app configuration file generated for hradil-twilight-night-1307 on 2024-11-29T22:12:28+01:00
+# fly.toml app configuration file generated for hradil on 2024-11-30T08:09:45+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'hradil-twilight-night-1307'
-primary_region = 'arn'
+app = 'hradil'
+primary_region = 'fra'
 
 [build]
+  dockerfile = "Dockerfile"
 
 [http_service]
   internal_port = 8080
