@@ -1,6 +1,5 @@
 .gitignore
 **/*__pycache__/
-.venv
 favicon.ico
 .secrets
 .env
