@@ -1,21 +1,16 @@
-FROM python:3.12.7 AS builder
+FROM python:latest AS builder
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
-WORKDIR /
-RUN ls -lh
+WORKDIR /app
 
 RUN python -m venv .venv
 COPY requirements.txt ./
-RUN ls -lh
 RUN .venv/bin/pip install -r requirements.txt
-FROM python:3.12.7-slim
-WORKDIR /
+FROM python:latest-slim
 COPY --from=builder /.venv .venv/
-RUN ls .venv
 COPY . .
-RUN ls
 # CMD [".venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 # ENTRYPOINT [".venv/bin/uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
-ENTRYPOINT [".venv/bin/python", "main"]
+ENTRYPOINT ["python", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
