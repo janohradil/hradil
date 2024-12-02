@@ -40,3 +40,12 @@ async def posli_odpoved(request: Request):
     odpoved = Odpoved(fname=fname, lname=lname, phone=phone, email=email, message=message, date=date.today())
     odpoved_id = collection_name.insert_one(odpoved.model_dump())
     return {"id": str(odpoved_id.inserted_id)}
+
+
+@router.get("/spravy", response_class=HTMLResponse)
+async def zobraz_spravy(request: Request):
+    """Zobraz všetky správy."""
+    odpovede = db.odpovede.find()
+    print(odpovede)
+    return templates.TemplateResponse("odpovede.html", {"request": request, "odpovede": list_serial(odpovede)})
+

@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from decouple import config
-import os
+
 
 client = MongoClient(f"mongodb+srv://{config("DB_USER")}:"
                      f"{config("DB_PASSWORD")}@{config("DB_HOST")}/"

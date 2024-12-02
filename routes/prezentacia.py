@@ -8,6 +8,7 @@ from routes.route import router
 from config.database import client, db, collection_name
 from schema.schemas import list_serial, individual_serial_odpoved, individual_serial_portfolio
 from datetime import datetime
+from utils.functions import get_year, get_image_paths, slugify
 
 router_prezentacia = APIRouter(tags=["prezentacia"])
 
@@ -17,37 +18,6 @@ templates = Jinja2Templates(directory="templates")
 
 # Directory where images are stored
 IMAGE_DIR = "static/img"
-
-# Dependency to provide the current year
-def get_year():
-    """Return the current year as a dictionary."""
-    current_year = datetime.now().year
-    return {"year": current_year}
-
-def get_image_paths(exclude_substr: list[str]=['orig', 'diela', 'tools.png', '.ico']):
-    # List image file paths
-    images = os.listdir(IMAGE_DIR)
-    cond = lambda img: not any(substr in img for substr in exclude_substr)
-    image_paths = [f"/static/img/{img}" for img in images if cond(img)]
-    return image_paths
-
-
-def slugify(value, allow_unicode=False):
-    """
-    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
-    dashes to single dashes. Remove characters that aren't alphanumerics,
-    underscores, or hyphens. Convert to lowercase. Also strip leading and
-    trailing whitespace, dashes, and underscores.
-    """
-    import re
-    import unicodedata
-    value = str(value)
-    if allow_unicode:
-        value = unicodedata.normalize('NFKC', value)
-    else:
-        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
-    value = re.sub(r'[^\w\s-]', '', value.lower())
-    return re.sub(r'[-\s]+', '-', value).strip('-_')
 
 
 @router_prezentacia.get("/", response_class=HTMLResponse)
@@ -88,7 +58,7 @@ async def portfolio_items(request: Request, current_year: dict = Depends(get_yea
         projekt['slug'] = os.path.join('projekty', slugify(projekt['title']))
         projekt['text'] = [p for p in projekt['text'].splitlines() if p != '']
         # print(projekt)
-        print(f"updating DB db.hradil.portfolio_data with slug: {projekt['slug']}")   
+        # print(f"updating DB db.hradil.portfolio_data with slug: {projekt['slug']}")   
         db.portfolio_data.update_one({'title': projekt['title']}, {'$set': {'slug': projekt['slug']}})
         projekt['slug_id'] = remove_before_slash(projekt['slug'])
     return templates.TemplateResponse("partials/portfolio_items.html", {"request": request, "portfolio_data": data, **current_year})
@@ -99,7 +69,7 @@ async def projekt(request: Request, slug: str, current_year: dict = Depends(get_
     # print('slug', slug)
     projekt = individual_serial_portfolio(db.portfolio_data.find_one({'slug': f'projekty/{slug}'}))
     projekt['text'] = [p for p in projekt['text'].splitlines() if p != '']
-    print(projekt)
+    # print(projekt)
     return templates.TemplateResponse("projekt.html", {"request": request, "data": projekt, **current_year})
 
 @router_prezentacia.get("/kontakt", response_class=HTMLResponse)
@@ -119,24 +89,18 @@ async def kontakt(fname: str = Form(...), lname: str = Form(...), phone: str = F
     response_content = f"<p>Ďakujem veľmi pekne {fname} {lname} za zanechanie správy! Vaša správa \"{message}\" bola zaznamenaná.</p><p>telefónne číso: {phone}</p><p>email: {email}</p>"
     return HTMLResponse(content=response_content)
 
-@router_prezentacia.get("/spravy", response_class=HTMLResponse)
-async def zobraz_spravy(request: Request, current_year: dict = Depends(get_year)):
-    """Zobraz všetky správy."""
-    odpovede = db.odpovede.find()
-    print(odpovede)
-    return templates.TemplateResponse("odpovede.html", {"request": request, "odpovede": list_serial(odpovede), **current_year})
 
 @router_prezentacia.get("/galeria", response_class=HTMLResponse)
 async def galeria(request: Request):
     # List image file paths
     images = os.listdir(IMAGE_DIR)
-    image_paths = get_image_paths()
+    image_paths = get_image_paths(image_dir=IMAGE_DIR)
     return templates.TemplateResponse("galeria.html", {"request": request, "images": image_paths})
 
 @router_prezentacia.get("/galeria/items", response_class=HTMLResponse)
 async def gallery_items(request: Request):
     images = os.listdir(IMAGE_DIR)
-    image_paths = get_image_paths()
+    image_paths = get_image_paths(image_dir=IMAGE_DIR)
     return templates.TemplateResponse("partials/gallery_items.html", {"request": request, "images": image_paths})
 
 @router_prezentacia.post("/upload")
