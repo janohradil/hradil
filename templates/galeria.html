@@ -28,7 +28,7 @@
         {% endfor %}
     </ol>
     <div class="carousel-inner">
-        {% for image in images %}
+        {% for image in images_carousel %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
             <img src="{{ image | replace('_small', '') }}" class="d-block w-100" alt="Image {{ image }}">
         </div>

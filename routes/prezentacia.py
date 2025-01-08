@@ -92,12 +92,16 @@ async def galeria(request: Request):
     # List image file paths
     images = os.listdir(IMAGE_DIR)
     image_paths = get_image_paths(image_dir=IMAGE_DIR)
-    return templates.TemplateResponse("galeria.html", {"request": request, "images": image_paths})
+    image_paths_carousel = [img for img in image_paths if '_small' not in img]
+    print(image_paths_carousel)
+    return templates.TemplateResponse("galeria.html", {"request": request, "images": image_paths, "images_carousel": image_paths_carousel})
 
 @router_prezentacia.get("/galeria/items", response_class=HTMLResponse)
 async def gallery_items(request: Request):
     images = os.listdir(IMAGE_DIR)
     image_paths = get_image_paths(image_dir=IMAGE_DIR)
+    image_paths_carousel = [img for img in image_paths if '_small' not in img]
+    # print(image_paths_carousel)
     return templates.TemplateResponse("partials/gallery_items.html", {"request": request, "images": image_paths})
 
 @router_prezentacia.post("/upload")

@@ -122,7 +122,7 @@ p {
 }
 
 img {
-    max-width: 96%;
+    /* max-width: 96%; */
     height: auto;
     margin: 1rem 0;
 }
