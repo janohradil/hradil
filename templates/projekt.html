@@ -1,10 +1,12 @@
 <div class="portfolio">
     <h1 class="text-center">{{ data.title }}</h1>
     <div class="card-text">
-        {% for paragraph in data.text %}
-        <p class="text-indent">{{ paragraph }}</p>
-        {% endfor %}
+
+        <p class="text-indent">
+            <!-- {{ data.text }} -->
+        </p>
     </div>
+    {{ data.text|safe }}
     {% for img in data.imgs %}
     <img src="{{ url_for ('static', path='img/diela/' ~ img) }}" alt="Ilustračný obrázok">
     {% endfor %}

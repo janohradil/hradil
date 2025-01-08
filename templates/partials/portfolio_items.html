@@ -6,9 +6,7 @@
                 <div class="col-12 col-md-6">
                     <h5 class="card-title text-center">{{ item.title }}</h5>
                     <div class="card-text">
-                        {% for paragraph in item.text %}
-                        <p class="text-indent">{{ paragraph }}</p>
-                        {% endfor %}
+                        {{ item.text|safe }}
                     </div>
                     <div class="row justify-content-center">
                         <button type="button" class="btn btn-primary col-4 col-md-7 col-sm-8" hx-get="{{ item.slug }}"
@@ -18,10 +16,9 @@
                 </div>
                 <div class="col-12 col-md-6">
 
-                    <div class="card">
+                    <div class="image-container">
                         {% for img in item.imgs %}
-                        <img src="{{ url_for ('static', path='img/diela/' ~ img) }}" class="card-img-top"
-                            alt="Ilustračný obrázok">
+                        <img src="{{ url_for ('static', path='img/diela/' ~ img) }}" class="" alt="Ilustračný obrázok">
                         {% endfor %}
                     </div>
                 </div>

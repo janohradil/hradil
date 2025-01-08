@@ -3,5 +3,7 @@
 favicon.ico
 .secrets
 .env
+.venv/
+.idea/
 */work/bkp/
 static/img/software_graphiscs.svg
