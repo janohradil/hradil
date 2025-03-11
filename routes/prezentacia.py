@@ -8,7 +8,7 @@ from routes.route import router
 from config.database import client, db, collection_name
 from schema.schemas import list_serial, individual_serial_odpoved, individual_serial_portfolio
 from datetime import datetime
-from utils.functions import get_year, get_image_paths, slugify
+from utils.functions import get_year, get_image_paths, slugify, Cert
 
 router_prezentacia = APIRouter(tags=["prezentacia"])
 
@@ -111,3 +111,10 @@ async def upload_image(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
     return {"info": "Image uploaded successfully"}
 
+
+@router_prezentacia.get("/certifikaty", response_class=HTMLResponse)
+async def certificates_view(request: Request, current_year: dict = Depends(get_year)):
+    """Return the certificates page."""
+    certs_list = os.listdir("static/img/certifikaty")
+    certs = [Cert(path=cert, name= cert[:cert.find('_UC-')]) for cert in certs_list if '.jpg' in cert]
+    return templates.TemplateResponse("certifikaty.html", {"request": request, "certs": certs, **current_year})

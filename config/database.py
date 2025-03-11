@@ -1,9 +1,11 @@
 from pymongo import MongoClient
-from decouple import config
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
-client = MongoClient(f"mongodb+srv://{config("DB_USER")}:"
-                     f"{config("DB_PASSWORD")}@{config("DB_HOST")}/"
+client = MongoClient(f"mongodb+srv://{os.environ.get("DB_USER")}:"
+                     f"{os.environ.get("DB_PASSWORD")}@{os.environ.get("DB_HOST")}/"
                      f"jan?retryWrites=true&w=majority")
 
 db = client.hradil

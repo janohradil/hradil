@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">Certifikáty</h1>
+<div class="container certifikaty">
+    <div class="container-fluid">
+        {% for cert in certs %}
+        <a href="{{ url_for ('static', path='img/certifikaty/' ~ cert.path) }}">
+        <img src="{{ url_for ('static', path='img/certifikaty/' ~ cert.path) }}" alt={{cert.name}} title={{cert.name}}>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
